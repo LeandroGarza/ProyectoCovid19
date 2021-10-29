@@ -13,7 +13,7 @@ int main(int argc, char **argv){
 
     string ultimo =argv[argc - 1];
 
-    for(int i = 0 ; i < argc ; i++){
+    for(int i = 1 ; i < argc - 1 ; i++){
         //podria hacer switch pero las funciones van a ser largas
         if(arg == "-estad"){
 
