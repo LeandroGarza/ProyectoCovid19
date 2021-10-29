@@ -17,7 +17,7 @@ public:
         cuenta = 0;
     }
 
-    Provincia(string &nombre, int cuent) : nombre(nombre) {
+    provincia(string &nombre, int cuent) : nombre(nombre) {
         cuenta = cuent;
     }
 
