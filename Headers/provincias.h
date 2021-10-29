@@ -28,6 +28,10 @@ public:
     void setNombre(string &nombr){
         nombre = nombr;
     }
+
+    void contador(){
+        cuenta++;
+    }
 }
 
 #endif //PROYECTOCOVID19_PROVINCIAS_H

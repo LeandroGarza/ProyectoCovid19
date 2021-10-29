@@ -141,8 +141,8 @@ void datosNecesarios::analizarDatos(string line){
 
     stringstream l(line);
     string palabra;
-    for (int columnas = 0; getline(l, palabra, ','); columnas++){
-        if (palabra.size() <= 0) {
+    for(int columnas = 0; getline(l, palabra, ','); columnas++){
+        if(palabra.size() <= 0) {
             if(columnas==7){
                 palabra = "SINESPECIFICAR";
             }
