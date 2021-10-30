@@ -12,6 +12,7 @@ void p_casos(int);  //las hizo juan a casos y muertes en una sola (las hicimos l
 void p_muertes(int); //las hizo juan a casos y muertes en una sola (las hicimos los 2....)
 void quickSort(int, int, int);  //el mismo que hicimos en clase
 void casos_cui(string, string); //recibe la fecha y el nombre de archivo
+void estad(string); //mostrara las estadisticas
 
 
 int main(int argc, char **argv){
@@ -173,5 +174,25 @@ void casos_cui(string fecha, string ultimo){
                 cout<<arregloCUI[i]<<endl;
             }
         }
+    }
+}
+
+void estad(string ultimo){
+    fstream fin;
+    fin.open(ultimo, ios::in);
+    float casos = 0;
+
+    int estuvieronCUI[];        //personas que estuvieron en cuidados intensivos
+    int edadConfirmados[100];   //todas las edades posibles
+    int edadFallecidos[100];
+
+    Casos casos;
+    for(int i = 0; i < 100; i++){
+        edadConfirmado[i] = 0;
+        edadFallecidos[i] = 0;
+    }
+
+    if(fin.fail()){
+        cout<<"No se pudo abrir el archivo"<<endl;
     }
 }
