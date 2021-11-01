@@ -32,6 +32,6 @@ public:
     void contador(){
         cuenta++;
     }
-}
+};
 
 #endif //PROYECTOCOVID19_PROVINCIAS_H

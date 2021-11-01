@@ -1,27 +1,33 @@
-#ifndef PROYECTOCOVID19_NODO_H
-#define PROYECTOCOVID19_NODO_H
+#ifndef NODO_H
+#define NODO_H
 
-template<class T>
-        class nodo{
-
+template <class T>
+class nodo
+{
 private:
     T dato;
     nodo<T> *siguiente;
+
 public:
-    T getDato(){
+    T getDato()
+    {
         return dato;
     }
-    void setDato (T d){
-        dato=d;
+
+    void setDato(T d)
+    {
+        dato = d;
     }
 
-    nodo<T> *getSiguiente(){
+    nodo<T> *getSiguiente()
+    {
         return siguiente;
     }
 
-    void setSiguiente(nodo<T> *s){
+    void setSiguiente(nodo<T> *s)
+    {
         this->siguiente = s;
     }
 };
 
-#endif //PROYECTOCOVID19_NODO_H
+#endif //NODO_H
