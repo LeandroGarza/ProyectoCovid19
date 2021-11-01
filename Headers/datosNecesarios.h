@@ -26,32 +26,32 @@ public:
 
     datosNecesarios();
 
-    void id(int id);
-    int id();
+    void set_id(int id);
+    int get_id();
 
-    void edad(int edad);
-    int edad();
+    void set_edad(int edad);
+    int get_edad();
 
-    void aniosMeses(string anio_meses);
-    string aniosMeses();
+    void set_aniosMeses(string anio_meses);
+    string get_aniosMeses();
 
-    void provincia(string provinc);
-    string provincia();
+    void set_provincia(string provinc);
+    string get_provincia();
 
-    void CUI(string cui);
-    string CUI();
+    void set_CUI(string cui);
+    string get_CUI();
 
-    void fechaCUI(string fecha);
-    string fechaCUI();
+    void set_fechaCUI(string fecha);
+    string get_fechaCUI();
 
-    void fallecio(string estado);
-    string fallecio();
+    void set_fallecio(string estado);
+    string get_fallecio();
 
-    void idProvincia(int idprov);
-    int idProvincia();
+    void set_idProvincia(int idprov);
+    int get_idProvincia();
 
-    void clasificacion(string clasifica);
-    string clasificacion();
+    void set_clasificacion(string clasifica);
+    string get_clasificacion();
 
     datosNecesarios(string linea);
 
@@ -59,116 +59,123 @@ public:
 };
 
 datosNecesarios::datosNecesarios(){
-    id = 0;
+    id_caso = 0;
     edad = 0;
     aniosMeses = "Anios";
     CUI = "NO";
     fechaCUI = "2020-01-01";
     fallecio = "NO";
-    IdProvincia = 0;
-    Provincia = "SINESPECIFICAR";
-    Clasificacion = "N/A";
+    idProvincia = 0;
+    provincia = "SINESPECIFICAR";
+    clasificacion = "N/A";
 }
 
-void datosNecesarios:::ID(int idd){
-    id = idd;
-}
-int datosNecesarios::ID(){
-    return id;
+datosNecesarios::datosNecesarios(string linea){
+    analizarDatos(linea);
 }
 
-void datosNecesarios::Edad(int edad){
+void datosNecesarios::set_id(int idd){
+    id_caso = idd;
+}
+int datosNecesarios::get_id(){
+    return id_caso;
+}
+
+void datosNecesarios::set_edad(int edad){
     edad = edad;
 }
-int datosNecesarios::edad(){
+int datosNecesarios::get_edad(){
     return edad;
 }
 
-void datosNecesarios::aniosMeses(string anioMes){
+void datosNecesarios::set_aniosMeses(string anioMes){
     aniosMeses = anioMes;
 }
-string datosNecesarios::aniosMeses(){
+string datosNecesarios::get_aniosMeses(){
     return aniosMeses;
 }
 
-void datosNecesarios::provincia(string provinc){
+void datosNecesarios::set_provincia(string provinc){
     provincia = provinc;
 }
-string datosNecesarios::provincia(){
+string datosNecesarios::get_provincia(){
     return provincia;
 }
 
-void datosNecesarios::CUI(string cui){
+void datosNecesarios::set_CUI(string cui){
     CUI = cui;
 }
-string datosNecesarios::Cui(){
+string datosNecesarios::get_CUI(){
     return CUI;
 }
 
-void datosNecesarios::fechaCUI(string fecha){
+void datosNecesarios::set_fechaCUI(string fecha){
     fechaCUI = fecha;
 }
-string datosNecesarios::fechaCUI(){
+string datosNecesarios::get_fechaCUI(){
     return fechaCUI;
 }
 
-void datosNecesarios::fallecio(string estado){
+void datosNecesarios::set_fallecio(string estado){
     fallecio = estado;
 }
-string datosNecesarios::fallecio(){
+string datosNecesarios::get_fallecio(){
     return fallecio;
 }
 
-void datosNecesarios::idProvincia(int idprov){
+void datosNecesarios::set_idProvincia(int idprov){
     idProvincia = idprov;
 }
-int datosNecesarios::provincia_Id(){
-    return idProvincia();
+int datosNecesarios::get_idProvincia(){
+    return idProvincia;
 }
 
-void datosNecesarios::clasificacion(string clasifica){
+void datosNecesarios::set_clasificacion(string clasifica){
     clasificacion = clasifica;
 }
-string datosNecesarios::clasificacion(){
+string datosNecesarios::get_clasificacion(){
     return clasificacion;
-}
-
-datosNecesarios::datosNecesarios() {}(string line){
-    analizarDatos(line);
 }
 
 void datosNecesarios::analizarDatos(string line){
 
     stringstream l(line);
     string palabra;
-    for(int columnas = 0; getline(l, palabra, ','); columnas++){
-        if(palabra.size() <= 0) {
-            if(columnas==7){
-                palabra = "SINESPECIFICAR";
-            }
-            if(columnas == 0 || columnas == 2 || columnas == 17) {
-                palabra = "404";
-            }
-            else{
-                palabra = "NA";
-            }
-        }
-        else{
+    stringstream s(line);
+    int total = -1;
+    while (getline(s, palabra, ','))
+    {
+        total++;
+        if (palabra.size() > 0)
+        {
             palabra = palabra.substr(1, palabra.size() - 2);
         }
-        switch(columnas) {
+        else
+        {
+            palabra = "NA";
+        }
+        switch(total) {
             case 0:
-                idCaso = (stoi(palabra));
+                try{
+                  id_caso = (stoi(palabra));
+                }
+                catch(std::invalid_argument e){
+                  id_caso = -1;
+                }
                 break;
 
             case 2:
-                edad = (stoi(palabra));
+                try{
+                  edad = (stoi(palabra));
+                }
+                catch(std::invalid_argument e){
+                  edad = -1;
+                }
                 break;
 
             case 3:
                 aniosMeses = palabra;
                 break;
-
             case 7:
                 provincia = palabra;
                 break;
@@ -186,16 +193,21 @@ void datosNecesarios::analizarDatos(string line){
                 break;
 
             case 17:
-                idProvincia = (stoi(palabra));
+                try{
+                  idProvincia = (stoi(palabra));
+                }
+                catch(std::invalid_argument e){
+                  idProvincia = -1;
+                }
                 break;
 
-            case 20
+            case 20:
                 clasificacion = palabra;
                 break;
             default:
                 break;
-        }
-    }
+      }
+  }
 }
 
 
