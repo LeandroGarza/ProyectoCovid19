@@ -83,7 +83,19 @@ T HashMap<K, T>::get(K clave)
   if(tabla[pos]->getClave() == clave){
     return tabla[pos]->getValor();
   }else{
-    throw 409;
+    int i = 0;
+    while (i < 10)
+    {
+      pos += 4 + i;
+      if(pos > tamanio){
+        pos = 0;
+        i++;
+      }
+      if(tabla[pos]->getClave() == clave){
+        return tabla[pos]->getValor();
+      }
+    }
+
   }
 }
 
@@ -98,7 +110,18 @@ void HashMap<K, T>::set(K clave, T valor)
   if(tabla[pos]->getClave() == clave){
     return tabla[pos]->setValor(valor);
   }else{
-    throw 409;
+    int i = 0;
+    while (i < 10)
+    {
+      pos += 4 + i;
+      if(pos > tamanio){
+        pos = 0;
+        i++;
+      }
+      if(tabla[pos]->getClave() == clave){
+        return tabla[pos]->setValor(valor);
+      }
+    }
   }
 }
 
@@ -111,20 +134,18 @@ void HashMap<K, T>::put(K clave, T valor)
   while (tabla[pos] != NULL)
   {
     int i = 0;
-    //Manejar la Colision!!!!!!!
     pos += 4 + i;
-    // std::cout<<"colision"<<std::endl; // Debug
     if(pos > tamanio){
       pos = 0;
       i++;
     }
   }
-
   tabla[pos] = new HashEntry<K, T>(clave, valor); //Corresponde a una fila en la tabla HASH
 }
 
 template <class K, class T>
 void HashMap<K, T>::remove(K clave) {}
+
 
 template <class K, class T>
 bool HashMap<K, T>::esVacio()
