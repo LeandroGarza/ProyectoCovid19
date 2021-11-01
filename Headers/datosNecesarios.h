@@ -29,31 +29,7 @@ public:
     void set_id(int id);
     int get_id();
 
-<<<<<<< HEAD
-    void _edad(int edad);
-    int _edad();
 
-    void _aniosMeses(string anio_meses);
-    string _aniosMeses();
-
-    void _provincia(string provinc);
-    string _provincia();
-
-    void _CUI(string cui);
-    string _CUI();
-
-    void _fechaCUI(string fecha);
-    string _fechaCUI();
-
-    void _fallecio(string estado);
-    string _fallecio();
-
-    void _idProvincia(int idprov);
-    int _idProvincia();
-
-    void _clasificacion(string clasifica);
-    string _clasificacion();
-=======
     void set_edad(int edad);
     int get_edad();
 
@@ -77,7 +53,6 @@ public:
 
     void set_clasificacion(string clasifica);
     string get_clasificacion();
->>>>>>> 0b7566fc95e7f1b2209981c73b5db8fc70ce867d
 
     datosNecesarios(string linea);
 
@@ -96,84 +71,11 @@ datosNecesarios::datosNecesarios(){
     clasificacion = "N/A";
 }
 
-<<<<<<< HEAD
+
 void datosNecesarios::id(int idd){
     id_caso = idd;
 }
 int datosNecesarios::id(){
-    return id_caso;
-}
-
-void datosNecesarios::_edad(int edad){
-    edad = edad;
-}
-int datosNecesarios::_edad(){
-    return edad;
-}
-
-void datosNecesarios::_aniosMeses(string anioMes){
-    aniosMeses = anioMes;
-}
-string datosNecesarios::_aniosMeses(){
-    return aniosMeses;
-}
-
-void datosNecesarios::_provincia(string provinc){
-    provincia = provinc;
-}
-string datosNecesarios::_provincia(){
-    return provincia;
-}
-
-void datosNecesarios::_CUI(string cui){
-    CUI = cui;
-}
-string datosNecesarios::_CUI(){
-    return CUI;
-}
-
-void datosNecesarios::_fechaCUI(string fecha){
-    fechaCUI = fecha;
-}
-string datosNecesarios::_fechaCUI(){
-    return fechaCUI;
-}
-
-void datosNecesarios::_fallecio(string estado){
-    fallecio = estado;
-}
-string datosNecesarios::_fallecio(){
-    return fallecio;
-}
-
-void datosNecesarios::_idProvincia(int idprov){
-    idProvincia = idprov;
-}
-int datosNecesarios::_idProvincia(){
-    return idProvincia;
-}
-
-void datosNecesarios::_clasificacion(string clasifica){
-    clasificacion = clasifica;
-}
-string datosNecesarios::_clasificacion(){
-    return clasificacion;
-}
-
-datosNecesarios::datosNecesarios(string linea){
-    analizarDatos(linea);
-}
-
-void datosNecesarios::analizarDatos(string linea){
-=======
-datosNecesarios::datosNecesarios(string linea){
-    analizarDatos(linea);
-}
-
-void datosNecesarios::set_id(int idd){
-    id_caso = idd;
-}
-int datosNecesarios::get_id(){
     return id_caso;
 }
 
@@ -233,12 +135,15 @@ string datosNecesarios::get_clasificacion(){
     return clasificacion;
 }
 
-void datosNecesarios::analizarDatos(string line){
->>>>>>> 0b7566fc95e7f1b2209981c73b5db8fc70ce867d
+datosNecesarios::datosNecesarios(string linea){
+    analizarDatos(linea);
+}
+
+void datosNecesarios::analizarDatos(string linea){
 
     stringstream l(linea);
     string palabra;
-    stringstream s(line);
+    stringstream s(linea);
     int total = -1;
     while (getline(s, palabra, ','))
     {
@@ -253,16 +158,13 @@ void datosNecesarios::analizarDatos(string line){
         }
         switch(total) {
             case 0:
-<<<<<<< HEAD
                 id_caso = (stoi(palabra));
-=======
                 try{
                   id_caso = (stoi(palabra));
                 }
                 catch(std::invalid_argument e){
                   id_caso = -1;
                 }
->>>>>>> 0b7566fc95e7f1b2209981c73b5db8fc70ce867d
                 break;
 
             case 2:

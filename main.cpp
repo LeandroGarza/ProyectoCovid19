@@ -2,19 +2,16 @@
 #include "Headers/Lista.h"
 #include "Headers/datosNecesarios.h"
 #include "Headers/provincias.h"
-<<<<<<< HEAD
-=======
 #include "Headers/HashMap.h"
 #include "Headers/pila.h"
->>>>>>> 0b7566fc95e7f1b2209981c73b5db8fc70ce867d
 #include <fstream>
 #include <string.h>
 #include <sstream>
 
 using namespace std;
 
-void p_casos(string, int);  //las hizo juan a casos y muertes en una sola (las hicimos los 2....)
-void p_muertes(string, int); //las hizo juan a casos y muertes en una sola (las hicimos los 2....)
+void p_casos(string, int);
+void p_muertes(string, int);
 void prov(int, string);
 void quickSort(int*, int, int);  //el mismo que hicimos en clase
 void quickSortK(int *arreglo1, string *arreglo2, int inicio, int fin); // ordenar arreglo de strings basado en arreglo de ints
@@ -30,24 +27,10 @@ unsigned int getHash(string s){
   return hash;
 }
 
-<<<<<<< HEAD
-int main(int argc, char **argv){
 
-    string ultimo =argv[argc - 1];
-
-    for(int i = 1 ; i < argc - 1 ; i++){
-        string arg = argv[i];
-        //podria hacer switch pero las funciones van a ser largas
-        if(arg == "-estad"){
-
-        }
-
-        if(arg == "-p_casos"){
-=======
 HashMap<int, int> loadHashMap(string filepath, int size){
   fstream fin;
   fin.open(filepath, ios::in);
->>>>>>> 0b7566fc95e7f1b2209981c73b5db8fc70ce867d
 
   string text, word;
   getline(fin, text);
@@ -60,14 +43,14 @@ HashMap<int, int> loadHashMap(string filepath, int size){
     hashmap.put(getHash(word), 0);
   }
 
-<<<<<<< HEAD
+
         if(arg == "-casos_cui"){
             fecha = argv[i+1];
             casos_cui(fecha, ultimo);
-=======
+
   return hashmap;
 }
->>>>>>> 0b7566fc95e7f1b2209981c73b5db8fc70ce867d
+
 
 int main(int argc, char **argv){
 
@@ -75,11 +58,11 @@ int main(int argc, char **argv){
 
     for(int i = 1 ; i < argc - 1 ; i++){
         string arg = argv[i];
-        // //podria hacer switch pero las funciones van a ser largas
-        // if(arg == "-estad"){
-        //
-        // }
-        //
+        //podria hacer switch pero las funciones van a ser largas
+        if(arg == "-estad"){
+            estadisticas(archivo);
+        }
+
         if(arg == "-p_casos"){
           int num;
           try{
@@ -287,11 +270,10 @@ void quickSort(int *arr, int start, int end){
 /*
 void casos_cui(string fecha, string ultimo){
 
-<<<<<<< HEAD
+
     lista<datosNecesarios> listaCUI;
-=======
+
     lista<int> listaCUI;
->>>>>>> 0b7566fc95e7f1b2209981c73b5db8fc70ce867d
     datosNecesarios cui;
 
     fstream fin;
@@ -324,24 +306,22 @@ void casos_cui(string fecha, string ultimo){
             }
         }
     }
-}
+}*/
 
 void estad(string ultimo){
     fstream fin;
     fin.open(ultimo, ios::in);
     float cantidadCasos = 0;
 
-<<<<<<< HEAD
     int edadConfirmados[100];   //todas las edades posibles
     int edadFallecidos[100];
 
     datosNecesarios casos;
-=======
+
     int estuvieronCUI[100];        //personas que estuvieron en cuidados intensivos
     int edadConfirmados[100];   //todas las edades posibles
     int edadFallecidos[100];
 
->>>>>>> 0b7566fc95e7f1b2209981c73b5db8fc70ce867d
     for(int i = 0; i < 100; i++){
         edadConfirmados[i] = 0;
         edadFallecidos[i] = 0;
@@ -376,5 +356,12 @@ void estad(string ultimo){
             }
         }
     }
+    float porcentajeFallec = ((fallecidos / contagiados) * 100);
+    float porcentajeContagi = ((contagiados / cantidadCasos) * 100);
+
+    cout << "Cantidad de casos: " << cantidadCasos << endl;
+    cout << "Cantidad de fallecidos: " << fallecidos << endl;
+    cout << "Cantidad de contagiados: " << contagiados << endl;
+    cout << "Porcentaje de Fallecidos: " << porcentajeFallec << "%" << endl;
+    cout << "Porcentaje de Contagiados: " << porcentajeContagi << "%" << endl;
 }
-*/
