@@ -1,7 +1,7 @@
 #include <iostream>
 #include "Headers/Lista.h"
 #include "Headers/datosNecesarios.h"
-#include "Headers/provincia.h"
+#include "Headers/provincias.h"
 #include <fstream>
 #include <string.h>
 #include <sstream>
@@ -20,6 +20,7 @@ int main(int argc, char **argv){
     string ultimo =argv[argc - 1];
 
     for(int i = 1 ; i < argc - 1 ; i++){
+        string arg = argv[i];
         //podria hacer switch pero las funciones van a ser largas
         if(arg == "-estad"){
 
@@ -34,6 +35,7 @@ int main(int argc, char **argv){
         }
 
         if(arg == "-casos_cui"){
+            fecha = argv[i+1];
             casos_cui(fecha, ultimo);
 
         }
@@ -142,7 +144,7 @@ void quickSort(int *arreglo, int inicio, int fin){
 
 void casos_cui(string fecha, string ultimo){
 
-    lista<Casos> listaCUI;
+    lista<datosNecesarios> listaCUI;
     datosNecesarios cui;
 
     fstream fin;
@@ -166,7 +168,7 @@ void casos_cui(string fecha, string ultimo){
             arregloCUI[i] = listaCUI.getDato(i);
         }
 
-        QuickSort(arregloCUI, 0, listaCUI.getTamanio());
+        quickSort(arregloCUI, 0, listaCUI.getTamanio());
         cout<<"Casos mayores a "<<fecha<<":" << endl;
 
         for(int i = 0 ; i < listaCUI.getTamanio() ; i++) {
@@ -180,19 +182,44 @@ void casos_cui(string fecha, string ultimo){
 void estad(string ultimo){
     fstream fin;
     fin.open(ultimo, ios::in);
-    float casos = 0;
+    float cantidadCasos = 0;
 
-    int estuvieronCUI[];        //personas que estuvieron en cuidados intensivos
     int edadConfirmados[100];   //todas las edades posibles
     int edadFallecidos[100];
 
-    Casos casos;
+    datosNecesarios casos;
     for(int i = 0; i < 100; i++){
-        edadConfirmado[i] = 0;
+        edadConfirmados[i] = 0;
         edadFallecidos[i] = 0;
     }
 
+    int contagiados = 0 , fallecidos = 0;
+
     if(fin.fail()){
         cout<<"No se pudo abrir el archivo"<<endl;
+    }
+    else{
+        string line;
+        getline(fin,line);
+
+        while(getline(fin,line)){
+            casos.analizarDatos(line);
+            cantidadCasos++;
+
+            if(casos._fallecio() == "SI") {
+                fallecidos++;
+                if (casos._aniosMeses() == "Años") {
+                    edadFallecidos[casos._edad()]++;
+                }
+            }
+            else{
+                if(casos._clasificacion() == "Confirmado"){
+                    contagiados++;
+                    if(casos._aniosMeses() == "Años"){
+                        edadConfirmados[casos._edad()]++;
+                    }
+                }
+            }
+        }
     }
 }

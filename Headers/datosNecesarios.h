@@ -29,29 +29,29 @@ public:
     void id(int id);
     int id();
 
-    void edad(int edad);
-    int edad();
+    void _edad(int edad);
+    int _edad();
 
-    void aniosMeses(string anio_meses);
-    string aniosMeses();
+    void _aniosMeses(string anio_meses);
+    string _aniosMeses();
 
-    void provincia(string provinc);
-    string provincia();
+    void _provincia(string provinc);
+    string _provincia();
 
-    void CUI(string cui);
-    string CUI();
+    void _CUI(string cui);
+    string _CUI();
 
-    void fechaCUI(string fecha);
-    string fechaCUI();
+    void _fechaCUI(string fecha);
+    string _fechaCUI();
 
-    void fallecio(string estado);
-    string fallecio();
+    void _fallecio(string estado);
+    string _fallecio();
 
-    void idProvincia(int idprov);
-    int idProvincia();
+    void _idProvincia(int idprov);
+    int _idProvincia();
 
-    void clasificacion(string clasifica);
-    string clasificacion();
+    void _clasificacion(string clasifica);
+    string _clasificacion();
 
     datosNecesarios(string linea);
 
@@ -59,87 +59,87 @@ public:
 };
 
 datosNecesarios::datosNecesarios(){
-    id = 0;
+    id_caso = 0;
     edad = 0;
     aniosMeses = "Anios";
     CUI = "NO";
     fechaCUI = "2020-01-01";
     fallecio = "NO";
-    IdProvincia = 0;
-    Provincia = "SINESPECIFICAR";
-    Clasificacion = "N/A";
+    idProvincia = 0;
+    provincia = "SINESPECIFICAR";
+    clasificacion = "N/A";
 }
 
-void datosNecesarios:::ID(int idd){
-    id = idd;
+void datosNecesarios::id(int idd){
+    id_caso = idd;
 }
-int datosNecesarios::ID(){
-    return id;
+int datosNecesarios::id(){
+    return id_caso;
 }
 
-void datosNecesarios::Edad(int edad){
+void datosNecesarios::_edad(int edad){
     edad = edad;
 }
-int datosNecesarios::edad(){
+int datosNecesarios::_edad(){
     return edad;
 }
 
-void datosNecesarios::aniosMeses(string anioMes){
+void datosNecesarios::_aniosMeses(string anioMes){
     aniosMeses = anioMes;
 }
-string datosNecesarios::aniosMeses(){
+string datosNecesarios::_aniosMeses(){
     return aniosMeses;
 }
 
-void datosNecesarios::provincia(string provinc){
+void datosNecesarios::_provincia(string provinc){
     provincia = provinc;
 }
-string datosNecesarios::provincia(){
+string datosNecesarios::_provincia(){
     return provincia;
 }
 
-void datosNecesarios::CUI(string cui){
+void datosNecesarios::_CUI(string cui){
     CUI = cui;
 }
-string datosNecesarios::Cui(){
+string datosNecesarios::_CUI(){
     return CUI;
 }
 
-void datosNecesarios::fechaCUI(string fecha){
+void datosNecesarios::_fechaCUI(string fecha){
     fechaCUI = fecha;
 }
-string datosNecesarios::fechaCUI(){
+string datosNecesarios::_fechaCUI(){
     return fechaCUI;
 }
 
-void datosNecesarios::fallecio(string estado){
+void datosNecesarios::_fallecio(string estado){
     fallecio = estado;
 }
-string datosNecesarios::fallecio(){
+string datosNecesarios::_fallecio(){
     return fallecio;
 }
 
-void datosNecesarios::idProvincia(int idprov){
+void datosNecesarios::_idProvincia(int idprov){
     idProvincia = idprov;
 }
-int datosNecesarios::provincia_Id(){
-    return idProvincia();
+int datosNecesarios::_idProvincia(){
+    return idProvincia;
 }
 
-void datosNecesarios::clasificacion(string clasifica){
+void datosNecesarios::_clasificacion(string clasifica){
     clasificacion = clasifica;
 }
-string datosNecesarios::clasificacion(){
+string datosNecesarios::_clasificacion(){
     return clasificacion;
 }
 
-datosNecesarios::datosNecesarios() {}(string line){
-    analizarDatos(line);
+datosNecesarios::datosNecesarios(string linea){
+    analizarDatos(linea);
 }
 
-void datosNecesarios::analizarDatos(string line){
+void datosNecesarios::analizarDatos(string linea){
 
-    stringstream l(line);
+    stringstream l(linea);
     string palabra;
     for(int columnas = 0; getline(l, palabra, ','); columnas++){
         if(palabra.size() <= 0) {
@@ -158,7 +158,7 @@ void datosNecesarios::analizarDatos(string line){
         }
         switch(columnas) {
             case 0:
-                idCaso = (stoi(palabra));
+                id_caso = (stoi(palabra));
                 break;
 
             case 2:
@@ -189,7 +189,7 @@ void datosNecesarios::analizarDatos(string line){
                 idProvincia = (stoi(palabra));
                 break;
 
-            case 20
+            case 20:
                 clasificacion = palabra;
                 break;
             default:
