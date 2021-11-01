@@ -313,16 +313,12 @@ void estad(string ultimo){
     fin.open(ultimo, ios::in);
     float cantidadCasos = 0;
 
-    int edadConfirmados[100];   //todas las edades posibles
-    int edadFallecidos[100];
+    int edadConfirmados[10];   //dice rango etario 10 anios
+    int edadFallecidos[10];
 
     datosNecesarios casos;
 
-    int estuvieronCUI[100];        //personas que estuvieron en cuidados intensivos
-    int edadConfirmados[100];   //todas las edades posibles
-    int edadFallecidos[100];
-
-    for(int i = 0; i < 100; i++){
+    for(int i = 0; i < 10; i++){
         edadConfirmados[i] = 0;
         edadFallecidos[i] = 0;
     }
@@ -340,28 +336,29 @@ void estad(string ultimo){
             casos.analizarDatos(line);
             cantidadCasos++;
 
-            if(casos._fallecio() == "SI") {
+            if(casos.get_fallecio() == "SI") {
                 fallecidos++;
-                if (casos._aniosMeses() == "Años") {
-                    edadFallecidos[casos._edad()]++;
+                if (casos.get_aniosMeses() == "Años") {
+                    edadFallecidos[casos.get_edad()/10]++;
                 }
             }
             else{
-                if(casos._clasificacion() == "Confirmado"){
+                if(casos.get_clasificacion() == "Confirmado"){
                     contagiados++;
-                    if(casos._aniosMeses() == "Años"){
-                        edadConfirmados[casos._edad()]++;
+                    if(casos.get_aniosMeses() == "Años"){
+                        edadConfirmados[casos.get_edad()/10]++;
                     }
                 }
             }
         }
     }
-    float porcentajeFallec = ((fallecidos / contagiados) * 100);
-    float porcentajeContagi = ((contagiados / cantidadCasos) * 100);
+    float porcentajeFallec = ((fallecidos/contagiados) * 100);
+    float porcentajeContagi = ((contagiados/cantidadCasos) * 100);
 
     cout << "Cantidad de casos: " << cantidadCasos << endl;
     cout << "Cantidad de fallecidos: " << fallecidos << endl;
     cout << "Cantidad de contagiados: " << contagiados << endl;
     cout << "Porcentaje de Fallecidos: " << porcentajeFallec << "%" << endl;
     cout << "Porcentaje de Contagiados: " << porcentajeContagi << "%" << endl;
+    //falta imprimir por rango de edades osea el rango etario
 }
