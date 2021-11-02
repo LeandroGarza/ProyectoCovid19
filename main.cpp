@@ -12,9 +12,8 @@ using namespace std;
 
 void p_casos(string, int);
 void p_muertes(string, int);
-void prov(int, string);
-void quickSort(int*, int, int);  //el mismo que hicimos en clase
 void quickSortK(int *arreglo1, string *arreglo2, int inicio, int fin); // ordenar arreglo de strings basado en arreglo de ints
+void quickSort(int*, int, int);  //el mismo que hicimos en clase
 void casos_cui(string, string); //recibe la fecha y el nombre de archivo
 void estad(string); //mostrara las estadisticas
 
@@ -44,9 +43,10 @@ HashMap<int, int> loadHashMap(string filepath, int size){
   }
 
 
-        if(arg == "-casos_cui"){
-            fecha = argv[i+1];
-            casos_cui(fecha, ultimo);
+  if(arg == "-casos_cui"){
+      fecha = argv[i+1];
+      casos_cui(fecha, ultimo);
+  }
 
   return hashmap;
 }
@@ -58,7 +58,7 @@ int main(int argc, char **argv){
 
     for(int i = 1 ; i < argc - 1 ; i++){
         string arg = argv[i];
-        //podria hacer switch pero las funciones van a ser largas
+
         if(arg == "-estad"){
             estad(archivo);
         }
@@ -323,7 +323,7 @@ void estad(string ultimo){
         edadFallecidos[i] = 0;
     }
 
-    int contagiados = 0 , fallecidos = 0;
+    float contagiados = 0 , fallecidos = 0;
 
     if(fin.fail()){
         cout<<"No se pudo abrir el archivo"<<endl;
