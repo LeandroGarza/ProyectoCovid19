@@ -60,7 +60,7 @@ int main(int argc, char **argv){
         string arg = argv[i];
         //podria hacer switch pero las funciones van a ser largas
         if(arg == "-estad"){
-            estadisticas(archivo);
+            estad(archivo);
         }
 
         if(arg == "-p_casos"){

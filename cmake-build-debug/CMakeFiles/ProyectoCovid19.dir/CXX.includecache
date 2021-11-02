@@ -40,38 +40,6 @@ iostream
 string.h
 C:/Users/Usuario/Documents/Programacion 3/parcial 2/ProyectoCovid19/Headers/string.h
 
-C:/Users/Usuario/Documents/Programacion 3/parcial 2/ProyectoCovid19/cosas juan/Arbol/ArbolBinario.h
-NodoArbol.h
-C:/Users/Usuario/Documents/Programacion 3/parcial 2/ProyectoCovid19/cosas juan/Arbol/NodoArbol.h
-iostream
--
-
-C:/Users/Usuario/Documents/Programacion 3/parcial 2/ProyectoCovid19/cosas juan/Arbol/NodoArbol.h
-
-C:/Users/Usuario/Documents/Programacion 3/parcial 2/ProyectoCovid19/cosas juan/Hash/HashEntry.h
-
-C:/Users/Usuario/Documents/Programacion 3/parcial 2/ProyectoCovid19/cosas juan/Hash/HashMap.h
-HashEntry.h
-C:/Users/Usuario/Documents/Programacion 3/parcial 2/ProyectoCovid19/cosas juan/Hash/HashEntry.h
-
-C:/Users/Usuario/Documents/Programacion 3/parcial 2/ProyectoCovid19/cosas juan/main.cpp
-iostream
--
-fstream
--
-sstream
--
-string.h
-C:/Users/Usuario/Documents/Programacion 3/parcial 2/ProyectoCovid19/cosas juan/string.h
-vector
--
-cmath
--
-Hash/HashMap.h
-C:/Users/Usuario/Documents/Programacion 3/parcial 2/ProyectoCovid19/cosas juan/Hash/HashMap.h
-Arbol/ArbolBinario.h
-C:/Users/Usuario/Documents/Programacion 3/parcial 2/ProyectoCovid19/cosas juan/Arbol/ArbolBinario.h
-
 C:/Users/Usuario/Documents/Programacion 3/parcial 2/ProyectoCovid19/main.cpp
 iostream
 -

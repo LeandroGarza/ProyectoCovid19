@@ -72,10 +72,10 @@ datosNecesarios::datosNecesarios(){
 }
 
 
-void datosNecesarios::id(int idd){
+void datosNecesarios::set_id(int idd){
     id_caso = idd;
 }
-int datosNecesarios::id(){
+int datosNecesarios::get_id(){
     return id_caso;
 }
 
