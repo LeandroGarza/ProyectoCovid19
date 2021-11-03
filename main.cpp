@@ -305,7 +305,6 @@ void estad(string& archivo){
 
     bool anios;
     int edad, total;
-    int debug1 = 0;
 
     fstream fin;
     fin.open(archivo, ios::in);
@@ -322,10 +321,6 @@ void estad(string& archivo){
             stringstream s(line);
             total = 0;
             while (getline(s, palabra, ',')){
-              debug1++;
-              if(debug1 % 1000000 == 0){
-                cout<<debug1<<endl;
-              }
               if(palabra.size() > 0){
                 palabra = palabra.substr(1, palabra.size() - 2);
                 if(total == 2){edad = stoi(palabra);}
