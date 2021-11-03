@@ -1,24 +1,20 @@
 #include <iostream>
 #include "Headers/Lista.h"
 #include "Headers/datosNecesarios.h"
-#include "Headers/provincias.h"
 #include "Headers/HashMap.h"
-#include "Headers/pila.h"
 #include <fstream>
-#include <string.h>
 #include <sstream>
 
 using namespace std;
 
-void p_casos(string, int);
-void p_muertes(string, int);
-void quickSortK(int *arreglo1, string *arreglo2, int inicio, int fin); // ordenar arreglo de strings basado en arreglo de ints
-void quickSort(int*, int, int);  //el mismo que hicimos en clase
-void casos_cui(string, string); //recibe la fecha y el nombre de archivo
-void estad(string); //mostrara las estadisticas
+void p_casos(string&, int);
+void p_muertes(string&, int);
+void quickSortK(int *arr, string *arr2, int start, int end); // ordenar arreglo de strings basado en arreglo de ints
+void casos_cui(string&, string&); //recibe la fecha y el nombre de archivo
+void estad(string&); //mostrara las estadisticas
 
-unsigned int getHash(string s){
-  unsigned int hash = 0;
+int getHash(string s){
+  int hash = 0;
   for(int i = 0; i < s.length(); ++i){
     hash += (s[i]);
   }
@@ -27,7 +23,7 @@ unsigned int getHash(string s){
 }
 
 
-HashMap<int, int> loadHashMap(string filepath, int size){
+HashMap<int, int> loadHashMap(const string& filepath, int size){
   fstream fin;
   fin.open(filepath, ios::in);
 
@@ -40,12 +36,6 @@ HashMap<int, int> loadHashMap(string filepath, int size){
   while (getline(s, word, ',')){
     word = word.substr(1, word.size() - 2);
     hashmap.put(getHash(word), 0);
-  }
-
-
-  if(arg == "-casos_cui"){
-      fecha = argv[i+1];
-      casos_cui(fecha, ultimo);
   }
 
   return hashmap;
@@ -63,6 +53,7 @@ int main(int argc, char **argv){
 
         if(arg == "-estad"){
             estad(archivo);
+            return 0;
         }
 
         if(arg == "-p_casos"){
@@ -70,10 +61,11 @@ int main(int argc, char **argv){
           try{
             num = stoi(argv[i + 1]);
           }
-          catch(std::invalid_argument){
+          catch(std::invalid_argument &e){
             num = 24;
           }
           p_casos(archivo, num);
+          return 0;
         }
 
         if(arg == "-p_muertes"){
@@ -81,40 +73,34 @@ int main(int argc, char **argv){
           try{
             num = stoi(argv[i + 1]);
           }
-          catch(std::invalid_argument){
+          catch(std::invalid_argument &e){
             num = 24;
           }
           p_muertes(archivo, num);
+          return 0;
         }
 
         if(arg == "-casos_cui"){
             if (argv[i+1][0] == '2'){
                 fecha = argv[i + 1];
-                i++;
             }
             casos_cui(fecha, archivo);
+            return 0;
         }
-        //
-        // if(arg == "-casos_edad"){
-        //
-        // }
-        //
-        else{
-            cout<<"Ingreso un argumento incorrecto"<<endl;
-        }
+
     }
 
     return 0;
 }
 
-void p_casos(string archivo, int numero){
+void p_casos(string& archivo, int numero){
 
     string provincias[] = {"Buenos Aires","CABA","Catamarca","Chaco","Chubut","Córdoba","Corrientes","Entre Ríos","Formosa","Jujuy","La Pampa","La Rioja","Mendoza","Misiones","Neuquén","Río Negro","Salta","San Juan","San Luis","Santa Cruz","Santa Fe","Santiago del Estero","Tierra del Fuego","Tucumán"};
     HashMap<int, int> casos = loadHashMap("provincias.txt", 100);
 
     fstream fin;
     string provincia, clasif;
-    unsigned int hash;
+    int hash;
     int ordenados[24];
     fin.open(archivo, ios::in);
     int contagiados = 0;
@@ -128,7 +114,7 @@ void p_casos(string archivo, int numero){
           int total = 0;
           stringstream s(line);
           while (getline(s, palabra, ',')){
-            if(palabra.size() > 0){
+            if(!palabra.empty()){
               palabra = palabra.substr(1, palabra.size() - 2);
               if(total == 7){provincia = palabra;}
               else if(total == 20){clasif = palabra;}
@@ -156,15 +142,15 @@ void p_casos(string archivo, int numero){
     }
 }
 
-void p_muertes(string archivo, int numero){
+void p_muertes(string& archivo, int numero){
 
     string provincias[] = {"Buenos Aires","CABA","Catamarca","Chaco","Chubut","Córdoba","Corrientes","Entre Ríos","Formosa","Jujuy","La Pampa","La Rioja","Mendoza","Misiones","Neuquén","Río Negro","Salta","San Juan","San Luis","Santa Cruz","Santa Fe","Santiago del Estero","Tierra del Fuego","Tucumán"};
     HashMap<int, int> muertes = loadHashMap("provincias.txt", 100);
+    string provincia, fallecido;
+    int hash;
+    int ordenados[24];
 
     fstream fin;
-    string provincia, fallecido;
-    unsigned int hash;
-    int ordenados[24];
     fin.open(archivo, ios::in);
     if(fin.fail()){
         cout<<"No se pudo abrir el csv"<<endl;
@@ -237,8 +223,8 @@ void quickSortK(int *arr, string *arr2, int start, int end){
     }while(i <= j);
 
 
-    if(start < j) quickSort(arr, start, j);
-    if(end > i) quickSort(arr, i, end);
+    if(start < j) quickSortK(arr, arr2, start, j);
+    if(end > i) quickSortK(arr, arr2, i, end);
 }
 
 
@@ -271,7 +257,7 @@ void quickSort(datosNecesarios arr[], int start, int end){
 }
 
 
-void casos_cui(string fecha, string archivo){
+void casos_cui(string& fecha, string& archivo){
 
     lista<datosNecesarios> listaCUI;
     datosNecesarios cui;
@@ -302,68 +288,98 @@ void casos_cui(string fecha, string archivo){
 
         for(int i = 0 ; i < listaCUI.getTamanio() ; i++) {
             if(arregloCUI[i] > fecha) {
-                cout<<arregloCUI[i]<<endl;
+                cout<<i<<endl;
             }
         }
     }
 }
 
-void estad(string archivo){
+void estad(string& archivo){
+    int cantidadCasos = 0;
+
+    int edadConfirmados[10] = {0};   //dice rango etario 10 anios
+    int edadFallecidos[10] = {0};
+
+    int contagiados = 0 , fallecidos = 0;
+
+
+    bool anios;
+    int edad, total;
+    int debug1 = 0;
+
     fstream fin;
     fin.open(archivo, ios::in);
-    float cantidadCasos = 0;
-
-    int edadConfirmados[10];   //dice rango etario 10 anios
-    int edadFallecidos[10];
-
-    datosNecesarios casos;
-
-    for(int i = 0; i < 10; i++){
-        edadConfirmados[i] = 0;
-        edadFallecidos[i] = 0;
-    }
-
-    float contagiados = 0 , fallecidos = 0;
-
     if(fin.fail()){
         cout<<"No se pudo abrir el archivo"<<endl;
     }
     else{
-        string line;
+        string line, palabra;
         getline(fin,line);
 
         while(getline(fin,line)){
-            casos.analizarDatos(line);
+
             cantidadCasos++;
+            stringstream s(line);
+            total = 0;
+            while (getline(s, palabra, ',')){
+              debug1++;
+              if(debug1 % 1000000 == 0){
+                cout<<debug1<<endl;
+              }
+              if(palabra.size() > 0){
+                palabra = palabra.substr(1, palabra.size() - 2);
+                if(total == 2){edad = stoi(palabra);}
+                else if(total == 3 && palabra == "Años"){anios = true;}
+                else if(total == 14 && palabra == "SI")
+                {
+                  ++fallecidos;
+                  if(anios){
+                    edadFallecidos[edad/10]++;
+                  }
+                  else{
+                    edadFallecidos[0]++;
+                  }
+                }
+                else if(palabra == "Confirmado"){
+                  ++contagiados;
+                  if(anios){
+                    edadConfirmados[edad/10]++;
+                  }
+                  else{
+                    edadConfirmados[0]++;
+                  }
+                  }
+                }
+                total++;
+              }
 
-            if(casos.get_fallecio() == "SI") {
-                fallecidos++;
-                if (casos.get_aniosMeses() == "Años") {
-                    edadFallecidos[casos.get_edad()/10]++;
-                }
             }
-            else{
-                if(casos.get_clasificacion() == "Confirmado"){
-                    contagiados++;
-                    if(casos.get_aniosMeses() == "Años"){
-                        edadConfirmados[casos.get_edad()/10]++;
-                    }
-                }
-            }
-        }
+          }
+
+    float porcentajeFallec, porcentajeContagi;
+    if(contagiados != 0){
+       porcentajeFallec = (fallecidos/contagiados) * 100;
     }
-    float porcentajeFallec = ((fallecidos/contagiados) * 100);
-    float porcentajeContagi = ((contagiados/cantidadCasos) * 100);
+    if(cantidadCasos != 0){
+      porcentajeContagi = (contagiados/cantidadCasos) * 100;
+    }
 
-    cout << "Cantidad de casos: " << cantidadCasos << endl;
+    cout << "Cantidad de muestras: " << cantidadCasos << endl;
+    cout << "----------------------------------------------------------"<<endl;
     cout << "Cantidad de fallecidos: " << fallecidos << endl;
     cout << "Cantidad de contagiados: " << contagiados << endl;
-    cout << "Porcentaje de Fallecidos: " << porcentajeFallec << "%" << endl;
-    cout << "Porcentaje de Contagiados: " << porcentajeContagi << "%" << endl;
+    cout << "----------------------------------------------------------"<<endl;
+    cout << "Porcentaje de Fallecidos sobre Contagiados: " << porcentajeFallec << "%" << endl;
+    cout << "Porcentaje de Contagiados sobre Total de Muestras: " << porcentajeContagi << "%" << endl;
+    cout << "----------------------------------------------------------"<<endl;
+    cout << "Cantidad de infectados por rango etario (en anios)"<<endl;
     for (int i = 0; i < 10; i++) {
-        cout << "La cantidad de contagiados entre " << i * 10 << " y " << (i * 10)+10 << " anios es: " << edadConfirmados[i] << endl;
+        cout << i * 10 << " y " << (i * 10) + 10 << ": " << edadConfirmados[i] << endl;
+
     }
+    cout << "----------------------------------------------------------"<<endl;
+    cout << "Cantidad de infectados por rango etario (en anios)"<<endl;
     for (int i = 0; i < 10; i++) {
-        cout << "La cantidad de fallecidos entre " << i * 10 << " y " <<(i * 10)+10 << " anios es: " << edadFallecidos[i] << endl;
+        cout << i * 10 << " y " <<(i * 10) + 10 << ": " << edadFallecidos[i] << endl;
     }
 }
