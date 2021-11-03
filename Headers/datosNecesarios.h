@@ -29,7 +29,6 @@ public:
     void set_id(int id);
     int get_id();
 
-
     void set_edad(int edad);
     int get_edad();
 
@@ -57,6 +56,13 @@ public:
     datosNecesarios(string linea);
 
     void analizarDatos(string line);
+
+    //tuvimos que agregar estos bool porq antes no comparaba las fechas
+    bool operator<(const datosNecesarios &rhs) const;
+    bool operator<=(const datosNecesarios &rhs) const;
+    bool operator>(const datosNecesarios &rhs) const;
+    bool operator>=(const datosNecesarios &rhs) const;
+
 };
 
 datosNecesarios::datosNecesarios(){
@@ -68,7 +74,7 @@ datosNecesarios::datosNecesarios(){
     fallecio = "NO";
     idProvincia = 0;
     provincia = "SINESPECIFICAR";
-    clasificacion = "N/A";
+    clasificacion = "NA";
 }
 
 
@@ -213,5 +219,20 @@ void datosNecesarios::analizarDatos(string linea){
   }
 }
 
+bool datosNecesarios::operator<(const datosNecesarios &rhs) const {
+    return fechaCUI < rhs.fechaCUI;
+}
+
+bool datosNecesarios::operator<=(const datosNecesarios &rhs) const {
+    return !(rhs < *this);
+}
+
+bool datosNecesarios::operator>(const datosNecesarios &rhs) const {
+    return fechaCUI > rhs.fechaCUI;
+}
+
+bool datosNecesarios::operator>=(const datosNecesarios &rhs) const {
+    return !(*this < rhs);
+}
 
 #endif //PROYECTOCOVID19_DATOSNECESARIOS_H

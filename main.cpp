@@ -54,6 +54,8 @@ HashMap<int, int> loadHashMap(string filepath, int size){
 
 int main(int argc, char **argv){
 
+    string fecha = "2020-01-01";
+
     string archivo = argv[argc - 1];
 
     for(int i = 1 ; i < argc - 1 ; i++){
@@ -84,19 +86,22 @@ int main(int argc, char **argv){
           }
           p_muertes(archivo, num);
         }
-        //
-        // if(arg == "-casos_cui"){
-        //     // casos_cui(fecha, archivo);
-        //
-        // }
+
+        if(arg == "-casos_cui"){
+            if (argv[i+1][0] == '2'){
+                fecha = argv[i + 1];
+                i++;
+            }
+            casos_cui(fecha, archivo);
+        }
         //
         // if(arg == "-casos_edad"){
         //
         // }
         //
-        // else{
-        //     cout<<"Ingreso un argumento incorrecto"<<endl;
-        // }
+        else{
+            cout<<"Ingreso un argumento incorrecto"<<endl;
+        }
     }
 
     return 0;
@@ -237,19 +242,18 @@ void quickSortK(int *arr, string *arr2, int start, int end){
 }
 
 
-void quickSort(int *arr, int start, int end){
+void quickSort(datosNecesarios arr[], int start, int end){
+
+    datosNecesarios pivot, aux;
     int medio = (start + end) / 2;
-    int pivot = arr[medio];
-    int aux;
+    pivot = arr[medio];
 
     int i = start;
     int j = end;
 
     do{
-
         while(arr[i] < pivot) i++;
         while(arr[j] > pivot) j--;
-
 
         if(i <= j){
             aux = arr[i];
@@ -262,22 +266,18 @@ void quickSort(int *arr, int start, int end){
 
     }while(i <= j);
 
-
     if(start < j) quickSort(arr, start, j);
     if(end > i) quickSort(arr, i, end);
 }
 
-/*
-void casos_cui(string fecha, string ultimo){
 
+void casos_cui(string fecha, string archivo){
 
     lista<datosNecesarios> listaCUI;
-
-    lista<int> listaCUI;
     datosNecesarios cui;
 
     fstream fin;
-    fin.open(ultimo, ios::in);
+    fin.open(archivo, ios::in);
 
     if(fin.fail()){
         cout << "No se pudo abrir el archivo"<<endl;
@@ -287,13 +287,13 @@ void casos_cui(string fecha, string ultimo){
         getline(fin, line);
         while (getline(fin, line)) {
             cui.analizarDatos(line);
-            if(cui.CUI() == "SI" && cui.fechaCUI() > fecha) {
+            if(cui.get_CUI() == "SI" && cui.get_fechaCUI() > fecha) {
                 listaCUI.insertarPrimero(cui);
             }
         }
 
         datosNecesarios arregloCUI[listaCUI.getTamanio()];
-        for (int i = 0 ; i < listaCUI.getTamanio() ; i++) {
+        for (int i = 0 ; i < listaCUI.getTamanio() ; i++){
             arregloCUI[i] = listaCUI.getDato(i);
         }
 
@@ -306,11 +306,11 @@ void casos_cui(string fecha, string ultimo){
             }
         }
     }
-}*/
+}
 
-void estad(string ultimo){
+void estad(string archivo){
     fstream fin;
-    fin.open(ultimo, ios::in);
+    fin.open(archivo, ios::in);
     float cantidadCasos = 0;
 
     int edadConfirmados[10];   //dice rango etario 10 anios
@@ -360,5 +360,10 @@ void estad(string ultimo){
     cout << "Cantidad de contagiados: " << contagiados << endl;
     cout << "Porcentaje de Fallecidos: " << porcentajeFallec << "%" << endl;
     cout << "Porcentaje de Contagiados: " << porcentajeContagi << "%" << endl;
-    //falta imprimir por rango de edades osea el rango etario
+    for (int i = 0; i < 10; i++) {
+        cout << "La cantidad de contagiados entre " << i * 10 << " y " << (i * 10)+10 << " anios es: " << edadConfirmados[i] << endl;
+    }
+    for (int i = 0; i < 10; i++) {
+        cout << "La cantidad de fallecidos entre " << i * 10 << " y " <<(i * 10)+10 << " anios es: " << edadFallecidos[i] << endl;
+    }
 }
