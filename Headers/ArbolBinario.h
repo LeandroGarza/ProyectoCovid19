@@ -1,5 +1,5 @@
-#ifndef U05_ARBOL_ARBOL_ARBOLBINARIO_H_
-#define U05_ARBOL_ARBOL_ARBOLBINARIO_H_
+#ifndef ARBOLBINARIO_H
+#define ARBOLBINARIO_H
 
 #include "NodoArbol.h"
 #include<iostream>
@@ -90,9 +90,10 @@ T ArbolBinario<T>::search(T dato, NodoArbol<T> *r){
     if(r == nullptr){   //si no existe le tiramos error
         throw 404;  //404 es valor no encontrado
     }
-
-    if(r->getData() == dato){
-        return r->getData();    //o return dato es lo mismo
+    if(r->getData() == dato && !r->getBuscado())
+    {
+        r->setBuscado(true);
+        return r->getData();    // return dato es lo mismo
     }
 
     if(r->getData() > dato){    //si el q estoy parado > al q estoy buscando
@@ -143,11 +144,7 @@ void ArbolBinario<T>::put(T dato, NodoArbol<T> *r){
 
     T miDato = r->getData();
 
-    if(miDato == dato){
-        throw 200;
-    }
-
-    if(dato > miDato){
+    if(dato >= miDato){
         if(r->getRight() != nullptr){
             put(dato, r->getRight());
         }
@@ -400,4 +397,4 @@ void ArbolBinario<T>::espejo(NodoArbol<T> *r){
 
 }
 
-#endif // U05_ARBOL_ARBOL_ARBOLBINARIO_H_
+#endif // ARBOLBINARIO_H

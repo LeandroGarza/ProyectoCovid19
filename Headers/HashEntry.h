@@ -1,5 +1,5 @@
-#ifndef U05_HASH_HASHMAP_HASHENTRY_H_
-#define U05_HASH_HASHMAP_HASHENTRY_H_
+#ifndef HASHENTRY_H
+#define HASHENTRY_H
 
 template <class K, class T>
 class HashEntry
@@ -28,4 +28,4 @@ public:
     }
 };
 
-#endif // U05_HASH_HASHMAP_HASHENTRY_H_
+#endif // HASHENTRY_H

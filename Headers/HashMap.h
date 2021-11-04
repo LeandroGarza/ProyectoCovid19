@@ -1,5 +1,5 @@
-#ifndef U05_HASH_HASHMAP_HASHMAP_H_
-#define U05_HASH_HASHMAP_HASHMAP_H_
+#ifndef HASHMAP_H
+#define HASHMAP_H
 
 #include "HashEntry.h"
 
@@ -108,7 +108,7 @@ void HashMap<K, T>::set(K clave, T valor)
     throw 404;
   }
   if(tabla[pos]->getClave() == clave){
-    return tabla[pos]->setValor(valor);
+    tabla[pos]->setValor(valor);
   }else{
     int i = 0;
     while (i < 10)
@@ -119,7 +119,7 @@ void HashMap<K, T>::set(K clave, T valor)
         i++;
       }
       if(tabla[pos]->getClave() == clave){
-        return tabla[pos]->setValor(valor);
+        tabla[pos]->setValor(valor);
       }
     }
   }
@@ -188,4 +188,4 @@ void HashMap<K, T>::print()
   }
 }
 
-#endif // U05_HASH_HASHMAP_HASHMAP_H_
+#endif // HASHMAP_H

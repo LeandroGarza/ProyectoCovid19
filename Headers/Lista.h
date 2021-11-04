@@ -7,16 +7,16 @@
 using namespace std;
 
 template<class T>
-        class lista{
+        class Lista{
 
         private:
             nodo<T> *inicio;
 
         public:
-            lista();
-            lista(const lista<T> &li);
+            Lista();
+            Lista(const Lista<T> &li);
 
-            ~lista();
+            ~Lista();
             bool esVacia();
             int getTamanio();
             void insertar(int, T);
@@ -29,7 +29,7 @@ template<class T>
             void imprimir();
 
             void agregar(int, T);
-            void fnInvierte(lista<T> *lis);
+            void fnInvierte(Lista<T> *lis);
             void borrar(int);
 
             void insertAfter2(int ,int ,int);
@@ -37,31 +37,31 @@ template<class T>
         };
 
 template<class T>
-lista<T>::lista(){
+Lista<T>::Lista(){
 
     inicio = nullptr;
 }
 
 template<class T>
-lista<T>::lista(const lista<T> &li){
+Lista<T>::Lista(const Lista<T> &li){
 
     inicio = li.inicio;
 }
 
 template<class T>
-lista<T>::~lista(){
+Lista<T>::~Lista(){
     vaciar();
     delete inicio;
 }
 
 template<class T>
-bool lista<T>::esVacia(){
+bool Lista<T>::esVacia(){
 
     return inicio == nullptr;
 }
 
 template<class T>
-lista<T>::getTamanio(){
+Lista<T>::getTamanio(){
 
     nodo<T> *aux = inicio;
     int tam = 0;
@@ -75,7 +75,7 @@ lista<T>::getTamanio(){
 }
 
 template<class T>
-void lista<T>::insertar(int pos, T dato){
+void Lista<T>::insertar(int pos, T dato){
 
     nodo<T> *aux = inicio;
 
@@ -104,19 +104,19 @@ void lista<T>::insertar(int pos, T dato){
 }
 
 template<class T>
-void lista<T>::insertarPrimero(T dato){
+void Lista<T>::insertarPrimero(T dato){
 
     insertar(0, dato);
 }
 
 template<class T>
-void lista<T>::insertarUltimo(T dato){
+void Lista<T>::insertarUltimo(T dato){
 
     insertar(getTamanio(),dato);
 }
 
 template<class T>   //elimina el nodo que vos le digas ya que vos le decis la posicion a eliminar
-void lista<T>::remover(int pos){
+void Lista<T>::remover(int pos){
     nodo<T> *aux = inicio, *aBorrar;
     int posActual = 0;
 
@@ -143,7 +143,7 @@ void lista<T>::remover(int pos){
 }
 
 template<class T>
-T lista<T>::getDato(int pos){
+T Lista<T>::getDato(int pos){
     nodo<T> *aux = inicio;
     int posActual = 0;
 
@@ -160,7 +160,7 @@ T lista<T>::getDato(int pos){
 }
 
 template<class T>
-void lista<T>::reemplazar(int pos, T dato){
+void Lista<T>::reemplazar(int pos, T dato){
 
     nodo<T> *aux = inicio;
     int posActual = 0;
@@ -177,7 +177,7 @@ void lista<T>::reemplazar(int pos, T dato){
 }
 
 template<class T>
-void lista<T>::vaciar(){
+void Lista<T>::vaciar(){
     nodo<T> *aux = inicio, *aBorrar;
 
     while(aux != nullptr){
@@ -189,8 +189,8 @@ void lista<T>::vaciar(){
     inicio = nullptr;
 }
 
-template<class T>   //imprime la lista que creamos
-void lista<T>::imprimir(){
+template<class T>   //imprime la Lista que creamos
+void Lista<T>::imprimir(){
 
     nodo<T> *aux = inicio;
 
@@ -201,7 +201,7 @@ void lista<T>::imprimir(){
 }
 
 template<class T>
-void lista<T>::agregar(int pos, T dato){
+void Lista<T>::agregar(int pos, T dato){
 
     int tam;
 
@@ -221,12 +221,12 @@ void lista<T>::agregar(int pos, T dato){
 }
 
 template<class T>
-void lista<T>::borrar(int posi){
+void Lista<T>::borrar(int posi){
 
     int tam = getTamanio();
 
     if(posi > tam-1){
-                cout<<"La lista no tiene "<<posi<<" elementos, ingrese un valor valido"<<endl;
+                cout<<"La Lista no tiene "<<posi<<" elementos, ingrese un valor valido"<<endl;
     }
     else{
         remover(posi);
@@ -236,19 +236,19 @@ void lista<T>::borrar(int posi){
 }
 
 template<class T>
-lista<T> *enlazadas(lista<T> &lis1, lista<T> &lis2) {
-    lista<T> *lista3 = new lista<T>();
+Lista<T> *enlazadas(Lista<T> &lis1, Lista<T> &lis2) {
+    Lista<T> *Lista3 = new Lista<T>();
 
     for(int i = 0; i < lis1.getTamanio(); i++)
-        lista3->insertarUltimo(lis1.getDato(i));
+        Lista3->insertarUltimo(lis1.getDato(i));
     for(int i = 0; i < lis2.getTamanio(); i++)
-        lista3->insertarUltimo(lis2.getDato(i));
+        Lista3->insertarUltimo(lis2.getDato(i));
 
-    return lista3;
+    return Lista3;
 }
 
 template<class T>
-void lista<T>::insertAfter2(int oldValue, int n, int newValue){
+void Lista<T>::insertAfter2(int oldValue, int n, int newValue){
 
     for(int i = 0 ; i < getTamanio() ; i++){
         if(getDato(i) == oldValue){
