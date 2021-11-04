@@ -7,9 +7,9 @@
 #include "Headers/pila.h"
 #include <fstream>
 #include <sstream>
-#include <exception>
+#include <chrono>
 
-using namespace std;
+using namespace std::chrono;
 
 void p_casos(string&, int);
 
@@ -27,7 +27,7 @@ int compare_dates(string, string);
 
 
 int main(int argc, char **argv){
-
+    auto inicio = high_resolution_clock::now();
     string archivo = argv[argc - 1];
 
     for(int i = 1 ; i < argc - 1 ; i++){
@@ -35,7 +35,6 @@ int main(int argc, char **argv){
 
         if(arg == "-estad"){
             estad(archivo);
-            return 0;
         }
 
         if(arg == "-p_casos"){
@@ -50,7 +49,6 @@ int main(int argc, char **argv){
             num = 24;
           }
           p_casos(archivo, num);
-          return 0;
         }
 
         if(arg == "-p_muertes"){
@@ -62,7 +60,6 @@ int main(int argc, char **argv){
             num = 24;
           }
           p_muertes(archivo, num);
-          return 0;
         }
 
         if(arg == "-casos_cui"){
@@ -71,17 +68,17 @@ int main(int argc, char **argv){
                 fecha = argv[i + 1];
             }
             casos_cui(fecha, archivo);
-            return 0;
         }
 
         if(arg == "-casos_edad"){
             int edad = stoi(argv[i + 1]);
             casos_edad(archivo, edad);
-            return 0;
         }
 
     }
-
+    auto final = high_resolution_clock::now();
+    auto duration = duration_cast<microseconds>(final - inicio);
+    cout<<"Tiempo de ejecucion: "<< duration.count() / 1000 << " nanosegundos";
     return 0;
 }
 
