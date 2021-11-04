@@ -82,8 +82,12 @@ int main(int argc, char **argv){
     return 0;
 }
 
-// false f1 < f2
-// true f1 > f2
+/*
+ * Descripcion: compara las fechas
+ * parametro f1: (string) fecha 1
+ * parametro f2: (string) fecha 2
+ * valor que retorna: si las dos fechas son iguales
+ */
 int compare_dates(string f1, string f2){
   stringstream sf1(f1);
   stringstream sf2(f2);
@@ -125,8 +129,11 @@ int compare_dates(string f1, string f2){
 }
 
 
-
-
+/*
+ * Descripcion: Basamos a cada provincia en un numero unico
+ * parametro arr: (string)
+ * valor que retorna: un ID unico para cada provincia
+ */
 template <class T>
 HashMap<string, T> loadHashMap(string *arr, int size, int arrSize){
 
@@ -140,6 +147,12 @@ HashMap<string, T> loadHashMap(string *arr, int size, int arrSize){
     return hashmap;
 }
 
+/*
+ * Descripcion: Muestra las provincias con mas contagiados. Si la provincia dice confirmado, a dicha provincia se le suma el caso
+ * parametro archivo: (string) archivo que le pasamos a la funcion como parametro
+ * parametro numero: (int) numero de la maxima cantidad de provincias con mas contagios
+ * valor que retorna: imprime las provincias con mas contagios en orden de mayor a menor
+ */
 void p_casos(string& archivo, int numero){
 
     string provincias[] = {"Buenos Aires","CABA","Catamarca","Chaco","Chubut","Córdoba","Corrientes","Entre Ríos","Formosa","Jujuy","La Pampa","La Rioja","Mendoza","Misiones","Neuquén","Río Negro","Salta","San Juan","San Luis","Santa Cruz","Santa Fe","Santiago del Estero","Tierra del Fuego","Tucumán"};
@@ -187,6 +200,12 @@ void p_casos(string& archivo, int numero){
     }
 }
 
+/*
+ * Descripcion: Muestra las provincias con mas muertes. Si el csv dice SI, a dicha provincia se le suma una muerte
+ * parametro archivo: (string) archivo que le pasamos a la funcion como parametro
+ * parametro numero: (int) numero de la maxima cantidad de provincias con mas muertes
+ * valor que retorna: imprime las provincias con mas muertes en orden de mayor a menor
+ */
 void p_muertes(string& archivo, int numero){
 
     string provincias[] = {"Buenos Aires","CABA","Catamarca","Chaco","Chubut","Córdoba","Corrientes","Entre Ríos","Formosa","Jujuy","La Pampa","La Rioja","Mendoza","Misiones","Neuquén","Río Negro","Salta","San Juan","San Luis","Santa Cruz","Santa Fe","Santiago del Estero","Tierra del Fuego","Tucumán"};
@@ -231,6 +250,12 @@ void p_muertes(string& archivo, int numero){
     }
 }
 
+/*
+ * Descripcion: Agarra un arreglo con numeros y otro con provincias los cuales estan relacionados directamente para asi poder ordenarlos
+ * parametro arr: (int) arreglo con numeros equivalentes a provincias
+ * parametro arr2: (string) arreglo con las provincias ordenadas alfabeticamente
+ * valor que retorna: none
+ */
 void quickSortK(int *arr, string *arr2, int start, int end){
     int medio = (start + end) / 2;
     int pivot = arr[medio];
@@ -266,6 +291,12 @@ void quickSortK(int *arr, string *arr2, int start, int end){
     if(end > i) quickSortK(arr, arr2, i, end);
 }
 
+/*
+ * Descripcion: Muestra los datos de casos que estuvieron en cuidados intensivos
+ * parametro fecha: (string) si se pasa una fecha, imprimimos de esta en adelante
+ * parametro archivo: (string) archivo que le pasamos a la funcion como parametro
+ * valor que retorna: datos de las personas en cuidados intensivos
+ */
 void casos_cui(string& fecha, string& archivo){
 
   ArbolBinario<DatosPacienteF> casos;
@@ -319,7 +350,12 @@ void casos_cui(string& fecha, string& archivo){
 
 }
 
-
+/*
+ * Descripcion: Muestra los datos de personas mayores a 12 meses
+ * parametro archivo: (string) archivo que le pasamos a la funcion como parametro
+ * parametro edad: (int) minima edad a partir de la cual arranca
+ * valor que retorna: datos de las personas mayores a esta edad
+ */
 void casos_edad(string& archivo, int edad){
 
   DatosPaciente dato;
@@ -382,6 +418,11 @@ void casos_edad(string& archivo, int edad){
 
 }
 
+/*
+ * Descripcion: Muestra todas las estadisticas en general
+ * parametro archivo: (string) archivo que le pasamos a la funcion como parametro
+ * valor que retorna: datos generales de covid
+ */
 void estad(string& archivo){
 
     int cantidadCasos = 0;
