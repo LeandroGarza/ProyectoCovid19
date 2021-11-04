@@ -23,8 +23,6 @@ public:
 
   ~HashMap();
 
-  void print();
-
   void set(K clave, T valor);
 
 };

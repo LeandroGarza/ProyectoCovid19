@@ -1,6 +1,9 @@
 #ifndef DATOSPACIENTE_H
 #define DATOSPACIENTE_H
 
+
+using namespace std;
+
 class DatosPaciente{
   private:
 

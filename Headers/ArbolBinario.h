@@ -18,7 +18,6 @@ public:
 
   T search(T dato); //buscar dato por parametro y ver si existe
 
-  void remove(T dato);  //remover dato del arbol (luego hay que reordenar el arbol)
 
   void preorder();  //visita raiz, izquierdo y derecho
 
@@ -28,23 +27,13 @@ public:
 
   ~ArbolBinario();  //destructor
 
-  bool esVacio();   //devuelve si es vacio, osea si tiene raiz o no
-
-  void print();     //imprime pero el preorder inorder y postorder tambn asiq capas no usemos mucho
-
   int contarPorNivel(int n);
-
-  void espejo();
 
 private:    //tambien lo podia declarar arriba en el otro private, pero siento + prolijo aca. Son privados recursivos
 
     T search(T dato, NodoArbol<T> *r);   //puede ser del mismo nombre ya que tienen parametros #. El 2do parametro permite hacer la busqueda de forma recursiva
 
     void put(T dato, NodoArbol<T> *r);
-
-    NodoArbol<T> *remove(T dato, NodoArbol<T> *r);
-
-    NodoArbol<T> *findMax(NodoArbol<T> *r, bool *found);    //el bool te dice si encontre o no el valor max. Es puntero xq si modifico el valor quiero que otra funcion recursiva se entere
 
     void preorder(NodoArbol<T> *r);
 
@@ -54,7 +43,6 @@ private:    //tambien lo podia declarar arriba en el otro private, pero siento +
 
     int contarPorNivel(NodoArbol<T> *r, int actual, int nivel);
 
-    void espejo(NodoArbol<T> *r);
 };
 
 /**
@@ -242,12 +230,6 @@ void ArbolBinario<T>::postorder(NodoArbol<T> *r){
 }
 
 
-/**
- * Muestra un árbol por consola
- */
-template <class T>
-void ArbolBinario<T>::print(){}
-
 template <class T>
 int ArbolBinario<T>::contarPorNivel(int n){
     if(root != nullptr){
@@ -274,24 +256,5 @@ int ArbolBinario<T>::contarPorNivel(NodoArbol<T> *r, int actual, int nivel){
     //return contarPorNivel(r->getRight(), actual+1, nivel);
 }
 
-template<class T>
-void ArbolBinario<T>::espejo(){
-    espejo(root);
-}
-
-template<class T>
-void ArbolBinario<T>::espejo(NodoArbol<T> *r){
-    if(r ==nullptr){
-        return;
-    }
-
-    r->getLeft();
-    r->getRight();
-
-    NodoArbol<T> *aux = r->getLeft();
-    r->setLeft(r->getRight());
-    r->setRight(aux);
-
-}
 
 #endif // ARBOLBINARIO_H

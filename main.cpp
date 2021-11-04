@@ -1,5 +1,4 @@
 #include <iostream>
-#include "Headers/Lista.h"
 #include "Headers/DatosPaciente.h"
 #include "Headers/DatosPacienteF.h"
 #include "Headers/HashMap.h"
@@ -9,7 +8,7 @@
 #include <sstream>
 #include <chrono>
 
-using namespace std::chrono;
+using namespace std;
 
 void p_casos(string&, int);
 
@@ -27,7 +26,7 @@ int compare_dates(string, string);
 
 
 int main(int argc, char **argv){
-    auto inicio = high_resolution_clock::now();
+    auto inicio = std::chrono::high_resolution_clock::now();
     string archivo = argv[argc - 1];
 
     for(int i = 1 ; i < argc - 1 ; i++){
@@ -75,10 +74,11 @@ int main(int argc, char **argv){
             casos_edad(archivo, edad);
         }
 
-    }
-    auto final = high_resolution_clock::now();
-    auto duration = duration_cast<microseconds>(final - inicio);
-    cout<<"Tiempo de ejecucion: "<< duration.count() / 1000 << " nanosegundos";
+      }
+      auto final = std::chrono::high_resolution_clock::now();
+      auto duration = std::chrono::duration_cast<std::chrono::microseconds>(final - inicio);
+      cout<<"Tiempo de ejecucion: "<< duration.count() << " microsegundos";
+
     return 0;
 }
 
@@ -86,7 +86,7 @@ int main(int argc, char **argv){
  * Descripcion: compara las fechas
  * parametro f1: (string) fecha 1
  * parametro f2: (string) fecha 2
- * valor que retorna: si las dos fechas son iguales
+ * valor que retorna: true si f1 es mayor o igual a f2, sino false
  */
 int compare_dates(string f1, string f2){
   stringstream sf1(f1);
@@ -130,8 +130,9 @@ int compare_dates(string f1, string f2){
 
 
 /*
- * Descripcion: Basamos a cada provincia en un numero unico
- * parametro arr: (string)
+ * Descripcion: Cargamos un mapa de hash basado en claves string
+ * parametro arr: (string), int arrSize valores de la array
+ * size: tamanio de la tabla de hash
  * valor que retorna: un ID unico para cada provincia
  */
 template <class T>
@@ -148,7 +149,7 @@ HashMap<string, T> loadHashMap(string *arr, int size, int arrSize){
 }
 
 /*
- * Descripcion: Muestra las provincias con mas contagiados. Si la provincia dice confirmado, a dicha provincia se le suma el caso
+ * Descripcion: Muestra las provincias con mas contagiados confirmados.
  * parametro archivo: (string) archivo que le pasamos a la funcion como parametro
  * parametro numero: (int) numero de la maxima cantidad de provincias con mas contagios
  * valor que retorna: imprime las provincias con mas contagios en orden de mayor a menor
@@ -201,10 +202,10 @@ void p_casos(string& archivo, int numero){
 }
 
 /*
- * Descripcion: Muestra las provincias con mas muertes. Si el csv dice SI, a dicha provincia se le suma una muerte
+ * Descripcion: Muestra las provincias con mas muertes.
  * parametro archivo: (string) archivo que le pasamos a la funcion como parametro
- * parametro numero: (int) numero de la maxima cantidad de provincias con mas muertes
- * valor que retorna: imprime las provincias con mas muertes en orden de mayor a menor
+ * parametro numero: (int) numero de la cantidad de provincias a mostrar
+ * valor que retorna: imprime las n provincias con mas muertes en orden de mayor a menor
  */
 void p_muertes(string& archivo, int numero){
 
@@ -251,9 +252,9 @@ void p_muertes(string& archivo, int numero){
 }
 
 /*
- * Descripcion: Agarra un arreglo con numeros y otro con provincias los cuales estan relacionados directamente para asi poder ordenarlos
- * parametro arr: (int) arreglo con numeros equivalentes a provincias
- * parametro arr2: (string) arreglo con las provincias ordenadas alfabeticamente
+ * Descripcion: Agarra un arreglo con numeros y otro con string los cuales estan relacionados directamente para asi poder ordenarlos
+ * parametro arr: (int) arreglo con numeros
+ * parametro arr2: (string) arreglo de strings
  * valor que retorna: none
  */
 void quickSortK(int *arr, string *arr2, int start, int end){
