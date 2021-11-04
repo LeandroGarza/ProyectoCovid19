@@ -5,6 +5,7 @@ template <class T> class NodoArbol {
 private:
   T data;   //el dato que vamos a almacenar
   NodoArbol *left, *right;  //apuntan a cada lado del nodo
+  bool buscado;
 
 public:
   NodoArbol(){  //constructor para inicializar el izq y derecho a nulo
@@ -14,13 +15,23 @@ public:
 
   NodoArbol(T d){   //acepta un parametro para inicializar tanto el dato como el izq y der
       data = d;
+      buscado = false;
       left = nullptr;
       right = nullptr;
+  }
+  
+  bool getBuscado() const{
+    return buscado;
+  }
+
+  void setBuscado(bool b){
+    buscado = b;
   }
 
   T getData() const{    //devuelve el valor que el nodo almacena
       return data;
   }
+
 
   void setData(T d){    //escribe el valor que el nodo almacena
       this->data = d;
@@ -33,7 +44,7 @@ public:
   void setRight(NodoArbol *r){  //escribe el nodo der
       this->right = r;    //setear la direccion de memoria del nodo derecho. Recibe la direccion de memoria de un nodo r
   }
-  
+
   NodoArbol *getLeft() const{   //devuelve el nodo izq
       return left;
   }
