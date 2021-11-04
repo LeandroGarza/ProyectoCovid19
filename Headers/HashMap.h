@@ -17,23 +17,16 @@ private:
 public:
   explicit HashMap(unsigned int k);
 
-  HashMap(unsigned int k, unsigned int (*hashFuncP)(K clave));
-
   T get(K clave);
 
   void put(K clave, T valor);
 
-  void remove(K clave);
-
   ~HashMap();
 
-  void add(K clave, T valor);
+  void print();
 
   void set(K clave, T valor);
 
-  bool esVacio();
-
-  void print();
 };
 
 template <class K, class T>
@@ -46,18 +39,6 @@ HashMap<K, T>::HashMap(unsigned int k)
     tabla[i] = NULL;
   }
   hashFuncP = hashFunc;
-}
-
-template <class K, class T>
-HashMap<K, T>::HashMap(unsigned int k, unsigned int (*fp)(K))
-{
-  tamanio = k;
-  tabla = new HashEntry<K, T> *[tamanio];
-  for (int i = 0; i < tamanio; i++)
-  {
-    tabla[i] = NULL;
-  }
-  hashFuncP = fp;
 }
 
 template <class K, class T>
@@ -84,15 +65,16 @@ T HashMap<K, T>::get(K clave)
     return tabla[pos]->getValor();
   }else{
     int i = 0;
-    while (i < 10)
+    while (i < 15)
     {
+        if(tabla[pos]->getClave() == clave)
+        {
+            return tabla[pos]->getValor();
+        }
       pos += 4 + i;
       if(pos > tamanio){
         pos = 0;
         i++;
-      }
-      if(tabla[pos]->getClave() == clave){
-        return tabla[pos]->getValor();
       }
     }
 
@@ -111,16 +93,17 @@ void HashMap<K, T>::set(K clave, T valor)
     tabla[pos]->setValor(valor);
   }else{
     int i = 0;
-    while (i < 10)
+    while (i < 15)
     {
+      if(tabla[pos]->getClave() == clave){
+        tabla[pos]->setValor(valor);
+      }
       pos += 4 + i;
       if(pos > tamanio){
         pos = 0;
         i++;
       }
-      if(tabla[pos]->getClave() == clave){
-        tabla[pos]->setValor(valor);
-      }
+
     }
   }
 }
@@ -131,9 +114,10 @@ void HashMap<K, T>::put(K clave, T valor)
 {
   unsigned int pos = hashFuncP(clave) % tamanio;
 
+  int i = 0;
   while (tabla[pos] != NULL)
   {
-    int i = 0;
+
     pos += 4 + i;
     if(pos > tamanio){
       pos = 0;
@@ -143,13 +127,22 @@ void HashMap<K, T>::put(K clave, T valor)
   tabla[pos] = new HashEntry<K, T>(clave, valor); //Corresponde a una fila en la tabla HASH
 }
 
-template <class K, class T>
-void HashMap<K, T>::remove(K clave) {}
 
 template <class K, class T>
 unsigned int HashMap<K, T>::hashFunc(K clave)
 {
-  return (unsigned int)clave;
+    if(clave == "Tierra del Fuego"){
+      return 17;
+    }
+    else if(clave == "Misiones"){
+      return 23;
+    }
+    int hash = 0;
+    for(int i = 0; i < clave.length(); ++i){
+        hash += (clave[i]);
+    }
+    hash += clave.size() + clave[0];
+    return hash;
 }
 
 #endif // HASHMAP_H
