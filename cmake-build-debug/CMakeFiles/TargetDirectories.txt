@@ -1,3 +1,0 @@
-C:/Users/Usuario/Documents/Programacion 3/parcial 2/ProyectoCovid19/cmake-build-debug/CMakeFiles/ProyectoCovid19.dir
-C:/Users/Usuario/Documents/Programacion 3/parcial 2/ProyectoCovid19/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/Usuario/Documents/Programacion 3/parcial 2/ProyectoCovid19/cmake-build-debug/CMakeFiles/rebuild_cache.dir

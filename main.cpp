@@ -9,44 +9,22 @@
 
 using namespace std;
 
+int getHash(string);
+
 void p_casos(string&, int);
+
 void p_muertes(string&, int);
-void quickSortK(int *arr, string *arr2, int start, int end); // ordenar arreglo de strings basado en arreglo de ints
-void casos_cui(string&, string&); //recibe la fecha y el nombre de archivo
+
+void quickSortK(int *arr, string *arr2, int start, int end);
+
+void casos_cui(string&, string&);
+
 void casos_edad(string&, int);
-void estad(string&); //mostrara las estadisticas
 
-int getHash(string s){
-  int hash = 0;
-  for(int i = 0; i < s.length(); ++i){
-    hash += (s[i]);
-  }
-  hash += s.size() + s[0];
-  return hash;
-}
-
-
-HashMap<int, int> loadHashMap(const string& filepath, int size){
-  fstream fin;
-  fin.open(filepath, ios::in);
-
-  string text, word;
-  getline(fin, text);
-
-  stringstream s(text);
-
-  HashMap<int, int> hashmap(size);
-  while (getline(s, word, ',')){
-    word = word.substr(1, word.size() - 2);
-    hashmap.put(getHash(word), 0);
-  }
-
-  return hashmap;
-}
+void estad(string&);
 
 
 int main(int argc, char **argv){
-
 
     string archivo = argv[argc - 1];
 
@@ -102,8 +80,34 @@ int main(int argc, char **argv){
 
     }
 
-
     return 0;
+}
+
+int getHash(string s){
+    int hash = 0;
+    for(int i = 0; i < s.length(); ++i){
+        hash += (s[i]);
+    }
+    hash += s.size() + s[0];
+    return hash;
+}
+
+HashMap<int, int> loadHashMap(const string& filepath, int size){
+    fstream fin;
+    fin.open(filepath, ios::in);
+
+    string text, word;
+    getline(fin, text);
+
+    stringstream s(text);
+
+    HashMap<int, int> hashmap(size);
+    while (getline(s, word, ',')){
+        word = word.substr(1, word.size() - 2);
+        hashmap.put(getHash(word), 0);
+    }
+
+    return hashmap;
 }
 
 void p_casos(string& archivo, int numero){
@@ -201,9 +205,6 @@ void p_muertes(string& archivo, int numero){
 
     }
 }
-
-
-
 
 void quickSortK(int *arr, string *arr2, int start, int end){
     int medio = (start + end) / 2;
