@@ -9,7 +9,7 @@ using namespace std;
 template <class T> class ArbolBinario {
 protected:
 
-    NodoArbol<T> *root;    //un puntero a un nodo de tipo arbol
+    NodoArbol<T> *root;  //un puntero a un nodo de tipo arbol
 
 public:
   ArbolBinario();
@@ -162,110 +162,7 @@ void ArbolBinario<T>::put(T dato, NodoArbol<T> *r){
             r->setLeft(nuevo);
         }
     }
-
-
 }
-
-/**
- * Elimina un dato del árbol
- * @param clave Clave para identificar el nodo a borrar
- */
-template <class T>
-void ArbolBinario<T>::remove(T dato){
-    root = remove(dato, root);  //necesitamos escontar ese dato para eliminarlo. Empezamos por la raiz
-}
-
-template <class T>
-NodoArbol<T> ArbolBinario<T>::*remove(T dato, NodoArbol<T> *r){
-
-    if(r == nullptr){
-        throw 404;
-    }
-
-    if(r->getData() == dato){
-
-        NodoArbol<T> *aux;
-        if(r->getLeft() == nullptr && r->getRight() == nullptr){
-            delete r;
-            return nullptr;
-        }
-        else{
-            if(r->getLeft() != nullptr && r->getRight() == nullptr){
-                aux = r->getLeft();
-                delete r;
-                return aux;
-            }
-            if(r->getLeft() == nullptr && r->getRight() != nullptr){
-                aux = r->getRight();
-                delete r;   //una vez q guardamos el nodo podemos borrarlo
-                return aux;
-            }
-            if(r->getLeft() != nullptr && r->getRight() != nullptr){    //podria hacerse sin if porq es la unica opcion que queda, osea con un else
-                if(r->getLeft()->getRight() != nullptr){     //el nodo que esta a la derecha del izquierdo
-                    //en este caso hay que buscar el valor max q este a la izq de r
-                    bool *found;
-                    aux = findMax(r->getLeft(), found);    //seria lo mismo q el found de arriba sea * en vez de este &
-                    aux->setRight(r->getRight());   //osea lo q hacemos es traer el nodo para reemplazarlo
-                    aux->setLeft(r->getLeft());
-                }
-                else{
-                    aux = r->getLeft();
-                    r->getLeft()->setRight(r->getRight());  //si quiero poner el izq en donde estaba el que elimino, pero el q elimino q tenia a la derecha,
-                }                                           //entonces al que quiero poner tengo que informarle la existencia de este
-                delete r;
-                return aux;
-            }
-        }
-    }
-    else{   //osea que el q estoy buscando borrar puede estar a la izq o a la derecha
-        if(r->getData() > dato){    //osea lado izq
-            r->setLeft(remove(dato, r->getLeft()));
-        }
-        else{
-            r->setRight(remove(dato, r->getRight()));
-        }
-    }
-
-    return r;
-}
-
-template <class T>
-NodoArbol<T> ArbolBinario<T>::*findMax(NodoArbol<T> *r, bool *found){
-
-    NodoArbol<T> *ret;
-    *found = false;
-
-    if(r->getRight() == nullptr){   //si a la derecha del nodo que estoy pasando por parametro, entonces el de parametro es el max
-        *found = true;
-        return r;
-    }
-    //osea que a la derecha hay algo, entonces tengo q encontra el max valor de la derecha
-    ret = findMax(r->getRight(), found);
-
-    if(*found){
-        r->setRight(nullptr);
-        *found = false;
-    }
-
-    return ret;
-}
-
-/**
- * Informa si un árbol esta vacío
- * @return
- */
-template <class T>
-bool ArbolBinario<T>::esVacio() { return false; }
-
-/**
- * Recorre un árbol en preorden. Se usa para copiar el arbol
- */
-//                          5
-//                         / \
-//                        3   8
-//                       / \
-//                      2   4
-// En este caso se ve: 5 - 3 - 2 - 4 - 8
 
 template <class T>
 void ArbolBinario<T>::preorder(){

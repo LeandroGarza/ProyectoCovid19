@@ -98,13 +98,6 @@ DatosPacienteF::DatosPacienteF(int m_id, string m_sexo, int m_edad, string m_eda
 
   }
 
-bool operator== (const DatosPacienteF& d1, const DatosPacienteF& d2){
-  return d1.fecha_cui == d2.fecha_cui;
-};
-
-bool operator!= (const DatosPacienteF& d1, const DatosPacienteF& d2){
-  return d1.id == d2.id;
-};
 
 bool operator>= (const DatosPacienteF& d1, const DatosPacienteF& d2){
   return d1.fecha_cui >= d2.fecha_cui;
@@ -119,9 +112,6 @@ bool operator< (const DatosPacienteF& d1, const DatosPacienteF& d2){
   return d1.fecha_cui < d2.fecha_cui;
 };
 
-bool operator! (const DatosPacienteF& d1){
-  return !d1.buscado;
-};
 
 
 ostream& operator<<(ostream& os, const DatosPacienteF& d1){

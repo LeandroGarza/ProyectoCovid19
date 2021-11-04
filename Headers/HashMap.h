@@ -146,46 +146,10 @@ void HashMap<K, T>::put(K clave, T valor)
 template <class K, class T>
 void HashMap<K, T>::remove(K clave) {}
 
-
-template <class K, class T>
-bool HashMap<K, T>::esVacio()
-{
-  for (int i = 0; i < tamanio; i++)
-  {
-    if (tabla[i] != NULL)
-    {
-      return false;
-    }
-  }
-  return true;
-}
-
 template <class K, class T>
 unsigned int HashMap<K, T>::hashFunc(K clave)
 {
   return (unsigned int)clave;
-}
-
-template <class K, class T>
-void HashMap<K, T>::print()
-{
-
-  std::cout << "i"
-            << " "
-            << "Clave"
-            << "\t\t"
-            << "Valor" << std::endl;
-  std::cout << "--------------------" << std::endl;
-  for (int i = 0; i < tamanio; i++)
-  {
-    std::cout << i << " ";
-    if (tabla[i] != NULL)
-    {
-      std::cout << tabla[i]->getClave() << "\t\t";
-      std::cout << tabla[i]->getValor();
-    }
-    std::cout << std::endl;
-  }
 }
 
 #endif // HASHMAP_H
