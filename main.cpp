@@ -1,7 +1,9 @@
 #include <iostream>
 #include "Headers/Lista.h"
-#include "Headers/datosNecesarios.h"
+#include "Headers/DatosPaciente.h"
+#include "Headers/DatosPacienteF.h"
 #include "Headers/HashMap.h"
+#include "Headers/ArbolBinario.h"
 #include <fstream>
 #include <sstream>
 
@@ -11,6 +13,7 @@ void p_casos(string&, int);
 void p_muertes(string&, int);
 void quickSortK(int *arr, string *arr2, int start, int end); // ordenar arreglo de strings basado en arreglo de ints
 void casos_cui(string&, string&); //recibe la fecha y el nombre de archivo
+void casos_edad(string&, int);
 void estad(string&); //mostrara las estadisticas
 
 int getHash(string s){
@@ -44,7 +47,6 @@ HashMap<int, int> loadHashMap(const string& filepath, int size){
 
 int main(int argc, char **argv){
 
-    string fecha = "2020-01-01";
 
     string archivo = argv[argc - 1];
 
@@ -64,6 +66,9 @@ int main(int argc, char **argv){
           catch(std::invalid_argument &e){
             num = 24;
           }
+          if(num > 24){
+            num = 24;
+          }
           p_casos(archivo, num);
           return 0;
         }
@@ -81,6 +86,7 @@ int main(int argc, char **argv){
         }
 
         if(arg == "-casos_cui"){
+            string fecha = "2020-01-01";
             if (argv[i+1][0] == '2'){
                 fecha = argv[i + 1];
             }
@@ -88,7 +94,14 @@ int main(int argc, char **argv){
             return 0;
         }
 
+        if(arg == "-casos_edad"){
+            int edad = stoi(argv[i + 1]);
+            casos_edad(archivo, edad);
+            return 0;
+        }
+
     }
+
 
     return 0;
 }
@@ -227,85 +240,130 @@ void quickSortK(int *arr, string *arr2, int start, int end){
     if(end > i) quickSortK(arr, arr2, i, end);
 }
 
+void casos_cui(string& fecha, string& archivo){
+  ArbolBinario<DatosPacienteF> casos;
+  DatosPacienteF dato;
 
-void quickSort(datosNecesarios arr[], int start, int end){
 
-    datosNecesarios pivot, aux;
-    int medio = (start + end) / 2;
-    pivot = arr[medio];
-
-    int i = start;
-    int j = end;
-
-    do{
-        while(arr[i] < pivot) i++;
-        while(arr[j] > pivot) j--;
-
-        if(i <= j){
-            aux = arr[i];
-            arr[i] = arr[j];
-            arr[j] = aux;
-
-            i++;
-            j--;
+  fstream fin;
+  fin.open(archivo, ios::in);
+  if(fin.fail()){
+      cout<<"No se pudo abrir el csv"<<endl;
+  }
+  else{
+      string line;
+      string palabra;
+      getline(fin, line);
+      while(getline(fin, line)){
+        int total = 0;
+        stringstream s(line);
+        while (getline(s, palabra, ',')){
+          if(palabra.size() > 0){
+            palabra = palabra.substr(1, palabra.size() - 2);
+            if(total == 0){dato.set_id(stoi(palabra));}
+            else if(total == 1){dato.set_sexo(palabra);}
+            else if(total == 2){dato.set_edad(stoi(palabra));}
+            else if(total == 3){dato.set_edad_calif(palabra);}
+            else if(total == 7){dato.set_provincia(palabra);}
+            else if(total == 8){dato.set_fecha_inicio_sintomas(palabra);}
+            else if(total == 12){dato.set_cui(palabra);}
+            else if(total == 13){dato.set_fecha_cui(palabra);}
+            else if(total == 14){dato.set_fallecido(palabra);}
+            else if(total == 15){dato.set_fecha_fallecimiento(palabra);}
+            else if(total == 20){dato.set_clasif(palabra);}
+            else if(total == 22){dato.set_fecha_diagnostico(palabra);}
+          }
+          total++;
         }
 
-    }while(i <= j);
+        if(dato.get_cui() == "SI" && dato.get_fecha_cui() >= fecha){
+          casos.put(dato);
+        }
+      }
 
-    if(start < j) quickSort(arr, start, j);
-    if(end > i) quickSort(arr, i, end);
+  }
+  casos.inorder();
+
 }
 
+void casos_edad(string& archivo, int edad){
+  ArbolBinario<DatosPaciente> casos;
+  DatosPaciente dato;
 
-void casos_cui(string& fecha, string& archivo){
+  const string provincias[] = {"Buenos Aires","CABA","Catamarca","Chaco","Chubut","Córdoba","Corrientes","Entre Ríos","Formosa","Jujuy","La Pampa","La Rioja","Mendoza","Misiones","Neuquén","Río Negro","Salta","San Juan","San Luis","Santa Cruz","Santa Fe","Santiago del Estero","Tierra del Fuego","Tucumán"};
+  Lista<DatosPaciente> ordenado;
 
-    lista<datosNecesarios> listaCUI;
-    datosNecesarios cui;
+  fstream fin;
+  fin.open(archivo, ios::in);
+  if(fin.fail()){
+      cout<<"No se pudo abrir el csv"<<endl;
+  }
+  else{
+      string line;
+      string palabra;
+      getline(fin, line);
+      while(getline(fin, line)){
+        int total = 0;
+        stringstream s(line);
+        while (getline(s, palabra, ',')){
+          if(palabra.size() > 0){
 
-    fstream fin;
-    fin.open(archivo, ios::in);
+            palabra = palabra.substr(1, palabra.size() - 2);
+            if(total == 0){dato.set_id(stoi(palabra));}
+            else if(total == 1){dato.set_sexo(palabra);}
+            else if(total == 2){dato.set_edad(stoi(palabra));}
+            else if(total == 3){dato.set_edad_calif(palabra);}
+            else if(total == 7){dato.set_provincia(palabra);}
+            else if(total == 8){dato.set_fecha_inicio_sintomas(palabra);}
+            else if(total == 12){dato.set_cui(palabra);}
+            else if(total == 13){dato.set_fecha_cui(palabra);}
+            else if(total == 14){dato.set_fallecido(palabra);}
+            else if(total == 15){dato.set_fecha_fallecimiento(palabra);}
+            else if(total == 20){dato.set_clasif(palabra);}
+            else if(total == 22){dato.set_fecha_diagnostico(palabra);}
+          }
+          total++;
+        }
+        casos.put(dato);
+      }
 
-    if(fin.fail()){
-        cout << "No se pudo abrir el archivo"<<endl;
+  }
+
+  DatosPaciente buscando, encontrado;
+  buscando.set_edad(edad);
+
+  while(true){
+    try{
+      encontrado = casos.search(buscando);
+      ordenado.insertarUltimo(encontrado);
     }
-    else{
-        string line;
-        getline(fin, line);
-        while (getline(fin, line)) {
-            cui.analizarDatos(line);
-            if(cui.get_CUI() == "SI" && cui.get_fechaCUI() > fecha) {
-                listaCUI.insertarPrimero(cui);
-            }
-        }
+    catch(int error){
+      break;
+    }
+  }
 
-        datosNecesarios arregloCUI[listaCUI.getTamanio()];
-        for (int i = 0 ; i < listaCUI.getTamanio() ; i++){
-            arregloCUI[i] = listaCUI.getDato(i);
-        }
-
-        quickSort(arregloCUI, 0, listaCUI.getTamanio());
-        cout<<"Casos mayores a "<<fecha<<":" << endl;
-
-        for(int i = 0 ; i < listaCUI.getTamanio() ; i++) {
-            if(arregloCUI[i] > fecha) {
-                cout<<i<<endl;
-            }
+  for(int j = 0; j < 23; j++){
+      for(int i = 0; i < ordenado.getTamanio(); i++){
+        if(ordenado.getDato(i).get_provincia() == provincias[j]){
+          cout<<encontrado;
         }
     }
+  }
+
 }
 
 void estad(string& archivo){
-    int cantidadCasos = 0;
+    unsigned int cantidadCasos = 0;
 
-    int edadConfirmados[10] = {0};   //dice rango etario 10 anios
-    int edadFallecidos[10] = {0};
+    unsigned int edadConfirmados[10] = {0};   //dice rango etario 10 anios
+    unsigned int edadFallecidos[10] = {0};
 
     int contagiados = 0 , fallecidos = 0;
 
 
     bool anios;
     int edad, total;
-
+    unsigned int debug = 0;
     fstream fin;
     fin.open(archivo, ios::in);
     if(fin.fail()){
@@ -314,12 +372,16 @@ void estad(string& archivo){
     else{
         string line, palabra;
         getline(fin,line);
-
         while(getline(fin,line)){
 
+            debug++;
+            if(debug % 199000 == 0){
+              cout<< (debug)<<endl;
+            }
             cantidadCasos++;
             stringstream s(line);
             total = 0;
+            anios = false;
             while (getline(s, palabra, ',')){
               if(palabra.size() > 0){
                 palabra = palabra.substr(1, palabra.size() - 2);
@@ -352,12 +414,8 @@ void estad(string& archivo){
           }
 
     float porcentajeFallec, porcentajeContagi;
-    if(contagiados != 0){
-       porcentajeFallec = (fallecidos/contagiados) * 100;
-    }
-    if(cantidadCasos != 0){
-      porcentajeContagi = (contagiados/cantidadCasos) * 100;
-    }
+    porcentajeFallec = (fallecidos/contagiados) * 100;
+    porcentajeContagi = (contagiados/cantidadCasos) * 100;
 
     cout << "Cantidad de muestras: " << cantidadCasos << endl;
     cout << "----------------------------------------------------------"<<endl;
